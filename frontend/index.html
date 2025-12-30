@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Application Météo</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <h1><i class="fas fa-sun"></i> Mini Météo</h1>
+            <p class="subtitle">Application météo en temps réel</p>
+        </header>
+
+        <main class="app-content">
+            <!-- Section de recherche -->
+            <section class="search-section">
+                <div class="search-container">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="city-input" placeholder="Rechercher une ville (ex: Paris, Lyon, Marseille)">
+                        <button id="search-btn" class="btn-search">
+                            <i class="fas fa-search"></i> Rechercher
+                        </button>
+                    </div>
+                    <div class="units-toggle">
+                        <button class="unit-btn active" data-unit="metric">°C</button>
+                        <button class="unit-btn" data-unit="imperial">°F</button>
+                    </div>
+                </div>
+                <div class="favorite-cities">
+                    <button class="city-btn" data-city="Paris">Paris</button>
+                    <button class="city-btn" data-city="Lyon">Lyon</button>
+                    <button class="city-btn" data-city="Marseille">Marseille</button>
+                    <button class="city-btn" data-city="Toulouse">Toulouse</button>
+                    <button class="city-btn" data-city="Nice">Nice</button>
+                </div>
+            </section>
+
+            <!-- Section météo actuelle -->
+            <section class="current-weather-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-map-marker-alt"></i> Météo Actuelle</h2>
+                    <div class="last-update" id="last-update">--:--</div>
+                </div>
+                
+                <div class="weather-card" id="current-weather">
+                    <div class="weather-loading">
+                        <div class="spinner"></div>
+                        <p>Chargement des données météo...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section prévisions -->
+            <section class="forecast-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-calendar-alt"></i> Prévisions sur 24h</h2>
+                </div>
+                
+                <div class="forecast-container" id="forecast-container">
+                    <div class="forecast-loading">
+                        <div class="spinner"></div>
+                        <p>Chargement des prévisions...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section informations supplémentaires -->
+            <section class="additional-info-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-info-circle"></i> Informations</h2>
+                </div>
+                
+                <div class="info-grid" id="additional-info">
+                    <!-- Les informations seront ajoutées dynamiquement -->
+                </div>
+            </section>
+        </main>
+
+        <footer class="app-footer">
+            <p>Mini Application Météo - Développée par Wiame</p>
+            <p class="footer-links">
+                <a href="#" id="api-info"><i class="fas fa-code"></i> API Info</a>
+                <a href="#" id="refresh-data"><i class="fas fa-sync-alt"></i> Actualiser</a>
+                <a href="https://openweathermap.org/" target="_blank"><i class="fas fa-external-link-alt"></i> OpenWeatherMap</a>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Modal pour les erreurs -->
+    <div class="modal" id="error-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-exclamation-triangle"></i> Erreur</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="error-message">Une erreur est survenue</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-ok">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal pour les informations API -->
+    <div class="modal" id="info-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-info-circle"></i> Informations API</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="api-info">
+                    <h4>Endpoints disponibles:</h4>
+                    <ul>
+                        <li><strong>/api/weather</strong> - Météo actuelle</li>
+                        <li><strong>/api/forecast</strong> - Prévisions sur 24h</li>
+                    </ul>
+                    <h4>Paramètres:</h4>
+                    <ul>
+                        <li><strong>city</strong>: Nom de la ville (ex: Paris)</li>
+                        <li><strong>units</strong>: Unités (metric pour °C, imperial pour °F)</li>
+                        <li><strong>lang</strong>: Langue (fr, en, es, etc.)</li>
+                    </ul>
+                    <p>Exemple: <code>/api/weather?city=Paris&units=metric&lang=fr</code></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-ok">Fermer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
